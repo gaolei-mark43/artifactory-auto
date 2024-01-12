@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Remote Repositories</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" integrity="sha384-lE6P3lz9nNj6NvU6ldR+BSGssYjPb+/y4Mw7Qf/NMIHL+ED9lJmGjjiL7VbFz1uE" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.17.4/dist/xlsx.full.min.js"></script>
+    <style><style>
+      /* Table Style */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 20px 0;
+        font-size: 1em;
+        font-family: sans-serif;
+        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      table th {
+        background-color: #009879;
+        color: #ffffff;
+        text-align: left;
+        padding: 12px;
+      }
+
+      table td {
+        border-bottom: 1px solid #dddddd;
+        text-align: left;
+        padding: 12px;
+      }
+
+      table tbody tr:nth-of-type(even) {
+        background-color: #f3f3f3;
+      }
+
+      /* Button Style */
+      .export-btn {
+        display: inline-block;
+        background-color: #4CAF50;
+        color: #ffffff;
+        text-align: center;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        margin: 20px;
+        transition: background-color 0.3s;
+      }
+
+      .export-btn:hover {
+        background-color: #3e8e41;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container mt-4">
+      <h1 class="mb-4">Remote Repositories</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>key</th>
+            <th>description</th>
+            <th>type</th>
+            <th>url</th>
+            <th>packageType</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td>{{ row["key"] }}</td>
+              <td>{{ row["description"] }}</td>
+              <td>{{ row["type"] }}</td>
+              <td>{{ row["url"] }}</td>
+              <td>{{ row["packageType"] }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <button class="btn btn-primary" id="exportBtn">Export to Excel</button>
+    </div>
+
+    <script>
+      function exportToExcel() {
+        const wb = XLSX.utils.table_to_book(document.querySelector('.table'));
+        XLSX.writeFile(wb, 'remote_repositories.xlsx');
+      }
+
+      document.querySelector('#exportBtn').addEventListener('click', exportToExcel);
+    </script>
+  </body>
+</html>
